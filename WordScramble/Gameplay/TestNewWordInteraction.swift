@@ -67,11 +67,9 @@ struct TestNewWordInteraction: View {
                         }
                         .onEnded { value in
                             if dragAmount.width < -20 && !pastWords.isEmpty {
-                                print("---")
-                                print("Started at \(pastWordsIndex)")
-                                pastWordsIndex += 1
-                                print("Ending at \(pastWordsIndex)")
-                                print("Looks at \(pastWords.count - pastWordsIndex)")
+                                if pastWordsIndex < pastWords.count {
+                                    pastWordsIndex += 1
+                                }
                                 rootWord = pastWords[pastWords.count - pastWordsIndex]
                             }
                             else {
