@@ -20,12 +20,13 @@ struct DictionaryLookup: UIViewControllerRepresentable {
 
 struct TestNewWordInteraction: View {
     @Binding var rootWord: String
-    @State private var pastWords: [String] = []
-    @State private var pastWordsIndex: Int = 0
+    @State private var lastWord: String = ""
+    @State private var nextWord: String = ""
     
-    @State private var dragAmount = CGSize.zero
     @State private var isDragged = false
+    @State private var dragAmount = CGSize.zero
     @State private var rotationAngle: Angle = Angle(degrees: 0)
+    var dragTolerance = 30.0
     
     @State private var isShowingDictionaryLookup = false
     
@@ -33,19 +34,28 @@ struct TestNewWordInteraction: View {
         ZStack {
             if isDragged {
                 HStack {
-                    Image(systemName: "arrowshape.backward.fill")
+                    if !lastWord.isEmpty {
+                        Image(systemName: "arrowshape.backward.fill")
+                            .foregroundStyle(
+                                dragAmount.width < (-1 * dragTolerance)
+                                ? HSBColor(hue: 200, saturation: 90, brightness: 98).color
+                                : .gray.opacity(0.7))
+                    }
                     Spacer()
-                    Image(systemName: "arrow.clockwise.circle.fill")
+                    Image(systemName: nextWord.isEmpty ? "arrow.clockwise.circle.fill" : "arrowshape.forward.fill")
+                        .foregroundStyle(
+                            dragAmount.width > dragTolerance
+                                ? HSBColor(hue: 200, saturation: 90, brightness: 98).color
+                                : .gray.opacity(0.7))
                 }
-                .font(.title)
-                .foregroundStyle(HSBColor(hue: 200, saturation: 90, brightness: 98).color)
-                .padding(.horizontal)
+                .font(.largeTitle)
+                .padding(.horizontal, 20)
             }
             
             Text("\(rootWord)".uppercased())
                 .font(.system(.largeTitle, design: .rounded).weight(.semibold))
-                .containerRelativeFrame(.horizontal, count: 12, span: 8, spacing: 10)
                 .padding(.vertical, 5)
+                .padding(.horizontal, 20)
                 .background(.thinMaterial.opacity(isDragged ? 1.0 : 0.0))
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .onAppear(perform: seedWord)
@@ -58,23 +68,31 @@ struct TestNewWordInteraction: View {
                     DragGesture()
                         .onChanged { value in
                             dragAmount.width = value.translation.width
-                            // Uses a logarithmic function to slow down the vertical drag after a certain point
                             dragAmount.height = 30 * log(abs(value.translation.height) / 30 + 1) * (value.translation.height < 0 ? -1 : 1)
                             rotationAngle = Angle(degrees: value.translation.width / 20)
+                            
                             withAnimation(.easeIn(duration: 0.15)) {
                                 isDragged = true
                             }
                         }
                         .onEnded { value in
-                            if dragAmount.width < -20 && !pastWords.isEmpty {
-                                if pastWordsIndex < pastWords.count {
-                                    pastWordsIndex += 1
-                                }
-                                rootWord = pastWords[pastWords.count - pastWordsIndex]
+                            // Go Back
+                            if dragAmount.width < (-1 * dragTolerance) && !lastWord.isEmpty {
+                                nextWord = rootWord
+                                rootWord = lastWord
+                                lastWord = ""
+                            }
+                            // Go Forward (after going back)
+                            else if dragAmount.width > dragTolerance && !nextWord.isEmpty {
+                                lastWord = rootWord
+                                rootWord = nextWord
+                                nextWord = ""
+                            }
+                            else if dragAmount.width > dragTolerance {
+                                seedWord()
                             }
                             else {
-                                seedWord()
-                                pastWordsIndex = 0
+                                // do nothing
                             }
                             
                             withAnimation(.bouncy(duration: 0.35)) {
@@ -106,13 +124,12 @@ struct TestNewWordInteraction: View {
                     DictionaryLookup(word: rootWord)
                 }
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: 50)
     }
     
     func seedWord () {
         if !rootWord.isEmpty {
-            pastWords.append(rootWord)
-            print(pastWords)
+            lastWord = rootWord
         }
         rootWord = generateWord()
     }
