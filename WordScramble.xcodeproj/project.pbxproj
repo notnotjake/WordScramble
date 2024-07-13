@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		239FD1EB2C421075005C222E /* TestNewWordInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239FD1EA2C421075005C222E /* TestNewWordInteraction.swift */; };
+		239FD2072C43084D005C222E /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239FD2062C43084D005C222E /* HistoryView.swift */; };
 		23C12ECD2C33206B00796F48 /* WordScrambleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C12ECC2C33206B00796F48 /* WordScrambleApp.swift */; };
 		23C12ECF2C33206B00796F48 /* PlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C12ECE2C33206B00796F48 /* PlaygroundView.swift */; };
 		23C12ED12C33206C00796F48 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23C12ED02C33206C00796F48 /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		239FD1EA2C421075005C222E /* TestNewWordInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestNewWordInteraction.swift; sourceTree = "<group>"; };
+		239FD2062C43084D005C222E /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		23C12EC92C33206B00796F48 /* WordScramble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordScramble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23C12ECC2C33206B00796F48 /* WordScrambleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordScrambleApp.swift; sourceTree = "<group>"; };
 		23C12ECE2C33206B00796F48 /* PlaygroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundView.swift; sourceTree = "<group>"; };
@@ -73,10 +75,11 @@
 		23C12ECB2C33206B00796F48 /* WordScramble */ = {
 			isa = PBXGroup;
 			children = (
-				23C12F292C40868200796F48 /* Completed Games */,
 				23C12ECC2C33206B00796F48 /* WordScrambleApp.swift */,
 				23C12EDA2C34EA1900796F48 /* ContentView.swift */,
+				23C12F292C40868200796F48 /* Completed Games */,
 				23C12EFA2C3C3EF400796F48 /* GameMenu.swift */,
+				239FD2062C43084D005C222E /* HistoryView.swift */,
 				23C12EFC2C3C4EB600796F48 /* HowToPlay.swift */,
 				23C12EFE2C3C52F300796F48 /* Gameplay */,
 				23C12ECE2C33206B00796F48 /* PlaygroundView.swift */,
@@ -192,6 +195,7 @@
 				23C12EFD2C3C4EB600796F48 /* HowToPlay.swift in Sources */,
 				23C12F2D2C41C47200796F48 /* GenerateWord.swift in Sources */,
 				23C12EFB2C3C3EF400796F48 /* GameMenu.swift in Sources */,
+				239FD2072C43084D005C222E /* HistoryView.swift in Sources */,
 				23C12F022C3C560A00796F48 /* Frantic.swift in Sources */,
 				23C12F2B2C41C21200796F48 /* GameplayViewModel.swift in Sources */,
 				23C12F282C3F786C00796F48 /* ToolbarView.swift in Sources */,

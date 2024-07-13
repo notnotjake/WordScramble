@@ -49,87 +49,11 @@ struct GameMenu: View {
     @Binding var showingView: GameViews
     @State private var showingHelp = false
     
-    let recentGames: [CompletedGames] = [
-        CompletedGames(word: "audibles", score: 64, date: Date.now, gamemode: .frantic),
-        CompletedGames(word: "regrades", score: 37, date: Date.now, gamemode: .timed),
-        CompletedGames(word: "shouting", score: 140, date: Date.now, gamemode: .zen),
-        CompletedGames(word: "audibles", score: 50, date: Date.now, gamemode: .frantic),
-        CompletedGames(word: "regrades", score: 43, date: Date.now, gamemode: .timed),
-        CompletedGames(word: "shouting", score: 90, date: Date.now, gamemode: .zen)
-    ]
-    
     var body: some View {
         VStack(spacing: 0) {
             NavigationStack {
-                List {
-                    Group {
-                        Section {
-                            HStack {
-                                Spacer()
-                                VStack {
-                                    Text("Lifetime Stats".uppercased())
-                                        .font(.system(.callout, design: .rounded).weight(.bold))
-                                        .foregroundStyle(.primary.opacity(0.6))
-                                        .padding(.bottom, 5)
-                                    HStack(spacing: 50) {
-                                        VStack(spacing: 0) {
-                                            Text("2:35hrs")
-                                                .font(.system(.headline, design: .rounded).weight(.semibold))
-                                            Text("Time")
-                                            
-                                        }
-                                        VStack(spacing: 0) {
-                                            Text("98")
-                                                .font(.system(.headline, design: .rounded).weight(.semibold))
-                                            Text("Words")
-                                        }
-                                        VStack(spacing: 0) {
-                                            Text("15")
-                                                .font(.system(.headline, design: .rounded).weight(.semibold))
-                                            Text("Games")
-                                        }
-                                    }
-                                }
-                                Spacer()
-                            }
-                        }
-                        
-                        Section {
-                            ForEach(recentGames, id: \.self) { game in
-                                RecentGamesItem(game: game)
-                            }
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .swipeActions(edge: .trailing) {
-                                Button("Play") {
-                                    //TODO: Implement reusing words
-                                }
-                                .tint(.green)
-                            }
-                            .swipeActions(edge: .leading) {
-                                Button("View") {
-                                    //TODO: Implement reusing words
-                                }
-                                .tint(.blue)
-                            }
-                        } header: {
-                            Text("Recent Games".uppercased())
-                                .font(.system(.callout, design: .rounded).weight(.bold))
-                                .foregroundStyle(.primary.opacity(0.8))
-                                .padding(.bottom, 5)
-                                .padding(.top, 15)
-                        }
-                    }
-                    .listRowBackground(Color.clear)
-                    .padding(.horizontal, 10)
-                    .listRowInsets(EdgeInsets())
-                }
-                .listStyle(.insetGrouped)
-                .background(.background.secondary)
-                
+                HistoryView()
             }
-            .navigationTitle("Test")
-                
             
             VStack {
                 VStack {
